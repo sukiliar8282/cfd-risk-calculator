@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <meta name="theme-color" content="#0f172a" />
+
+    <meta http-equiv="Content-Security-Policy" content="
+            default-src 'self';
+            script-src 'self' https://cdn.jsdelivr.net;
+            style-src 'self';
+            img-src 'self' data:;
+            font-src 'self';
+            connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+            object-src 'none';
+            base-uri 'self';
+            form-action 'self';
+            upgrade-insecure-requests;
+        " />
+
+    <link rel="icon" type="image/png" href="assets/eincet.png" />
+
+    <title>CFD Risk Calculator – Position Size & Risk Management</title>
+
+    <meta name="description"
+        content="CFD Risk Calculator untuk menghitung Position Size, Risk, Stop Loss, Take Profit, Risk/Reward, Margin, Drawdown, dan trading risk management." />
+
+    <meta property="og:title" content="CFD Risk Calculator" />
+    <meta property="og:description"
+        content="Hitung Risk, Position Size, Profit, Loss, dan Exposure dengan lebih mudah." />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+<header class="site-header">
+    <div class="container header-content">
+        <div class="brand-lockup">
+            <img src="assets/eincet.png" alt="Logo EINCET" class="brand-logo" width="56" height="56" />
+
+            <div>
+                <p class="eyebrow">TRADING RISK MANAGEMENT</p>
+
+                <h1>CFD Risk Calculator</h1>
+
+                <p class="subtitle">
+                    Hitung Risk, Position Size, Profit, Loss, dan Exposure
+                    dengan lebih mudah.
+                </p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button type="button" id="auth-open-button">
+                Login
+            </button>
+
+            <button type="button" id="theme-toggle" aria-label="Ganti theme">
+                Theme
+            </button>
+
+            <div id="auth-user-area" hidden>
+                <button type="button" id="auth-profile-button">
+                    Profil
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <dialog id="auth-dialog" aria-labelledby="auth-dialog-title">
+        <form id="auth-form">
+            <button type="button" id="auth-close-button" aria-label="Tutup login">
+                ×
+            </button>
+
+            <p class="eyebrow">ACCOUNT</p>
+
+            <h2 id="auth-dialog-title">Login</h2>
+
+            <p>
+                Login untuk menyimpan preference dan pengaturan calculator kamu.
+            </p>
+
+            <div class="form-group">
+                <label for="auth-email">
+                    Email
+                </label>
+
+                <input type="email" id="auth-email" placeholder="nama@email.com" autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+                <label for="auth-password">
+                    Password
+                </label>
+
+                <input type="password" id="auth-password" placeholder="Masukkan password"
+                    autocomplete="current-password" />
+            </div>
+
+            <div class="auth-actions">
+                <button type="button" id="auth-login-button">
+                    Login
+                </button>
+
+                <button type="button" id="auth-register-button">
+                    Buat Akun
+                </button>
+
+                <button type="button" id="auth-guest-button">
+                    Lanjut Tanpa Login
+                </button>
+            </div>
+
+            <p id="auth-message" role="status" aria-live="polite"></p>
+        </form>
+    </dialog>
+
+<dialog id="profile-dialog" aria-labelledby="profile-dialog-title">
+    <div class="profile-panel">
+        <button type="button" id="profile-close-button" aria-label="Tutup profile">
+            ×
+        </button>
+
+        <p class="eyebrow">ACCOUNT PROFILE</p>
+
+        <h2 id="profile-dialog-title">
+            Profile
+        </h2>
+
+        <div class="profile-avatar">
+            <img src="assets/eincet.png" alt="Profile branding EINCET" />
+        </div>
+
+        <p class="profile-label">
+            Email
+        </p>
+
+        <p id="profile-email" class="profile-email">
+            Belum login
+        </p>
+
+        <p id="profile-status" class="profile-status">
+            Status: Guest
+        </p>
+
+        <button type="button" id="profile-logout-button">
+            Logout
+        </button>
+    </div>
+</dialog>
+
+    <main class="container">
+
+        <section class="calculator-section" aria-labelledby="calculator-title">
+            <div class="section-heading">
+                <p class="eyebrow">MAIN CALCULATOR</p>
+
+                <h2 id="calculator-title">Risk Calculator</h2>
+
+                <p>
+                    Isi data akun dan Trade Setup kamu. Setelah itu, calculator
+                    akan membantu menghitung Risk dan Position Size.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Cara Pakai</h3>
+
+                <ol>
+                    <li>Masukkan Account Balance kamu.</li>
+                    <li>Tentukan Risk per Trade.</li>
+                    <li>Masukkan Entry Price.</li>
+                    <li>Masukkan Stop Loss.</li>
+                    <li>Masukkan Take Profit jika ada.</li>
+                    <li>Klik Calculate Risk untuk melihat hasilnya.</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Contoh Sederhana</h3>
+
+                <p>
+                    Balance $1,000 dengan Risk 1% berarti Risk Amount kamu
+                    sekitar $10 jika Stop Loss terkena.
+                </p>
+            </div>
+
+            <form id="risk-calculator-form">
+                <div class="calculator-grid">
+                    <section class="card" aria-labelledby="account-title">
+                        <h3 id="account-title">Account</h3>
+
+                        <div class="form-group">
+                            <label for="account-balance">
+                                Account Balance
+                            </label>
+
+                            <input type="number" id="account-balance" name="accountBalance" placeholder="Contoh: 1000"
+                                min="0" step="any" inputmode="decimal" autocomplete="off"
+                                aria-describedby="account-balance-help" />
+
+                            <small id="account-balance-help">
+                                Saldo akun yang ingin kamu gunakan untuk perhitungan.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="account-currency">
+                                Account Currency
+                            </label>
+
+                            <select id="account-currency" name="accountCurrency">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="JPY">JPY</option>
+                                <option value="AUD">AUD</option>
+                                <option value="CAD">CAD</option>
+                                <option value="CHF">CHF</option>
+                                <option value="NZD">NZD</option>
+                                <option value="IDR">IDR</option>
+                            </select>
+
+                            <small>
+                                Pilih mata uang yang digunakan pada Account kamu.
+                            </small>
+                        </div>
+
+                        <fieldset>
+                            <legend>Risk Mode</legend>
+
+                            <label>
+                                <input type="radio" name="riskMode" value="percent" checked />
+                                Risk %
+                            </label>
+
+                            <label>
+                                <input type="radio" name="riskMode" value="fixed" />
+                                Fixed Amount
+                            </label>
+
+                            <small>
+                                Pilih apakah Risk ingin dihitung berdasarkan
+                                persentase atau nominal tetap.
+                            </small>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <label for="risk-value">
+                                Risk per Trade
+                            </label>
+
+                            <input type="number" id="risk-value" name="riskValue" placeholder="Contoh: 1" min="0"
+                                step="any" inputmode="decimal" autocomplete="off" />
+
+                            <small>
+                                Risk yang ingin kamu gunakan untuk satu Trade.
+                                Contoh 1% berarti sekitar 1% dari Balance.
+                            </small>
+                        </div>
+                    </section>
+
+                    <section class="card" aria-labelledby="trade-setup-title">
+                        <h3 id="trade-setup-title">Trade Setup</h3>
+
+                        <div class="form-group">
+                            <label for="instrument">
+                                Instrument
+                            </label>
+
+                            <select id="instrument" name="instrument">
+                                <option value="EURUSD">EURUSD</option>
+                                <option value="GBPUSD">GBPUSD</option>
+                                <option value="USDJPY">USDJPY</option>
+                                <option value="XAUUSD">XAUUSD</option>
+                                <option value="XAGUSD">XAGUSD</option>
+                                <option value="US30">US30</option>
+                                <option value="NAS100">NAS100</option>
+                                <option value="SPX500">SPX500</option>
+                                <option value="BTCUSD">BTCUSD</option>
+                                <option value="ETHUSD">ETHUSD</option>
+                                <option value="CUSTOM">Custom</option>
+                            </select>
+
+                            <small>
+                                Pilih instrument yang ingin kamu hitung.
+                            </small>
+                        </div>
+
+                        <fieldset>
+                            <legend>Direction</legend>
+
+                            <label>
+                                <input type="radio" name="direction" value="long" checked />
+                                Long
+                            </label>
+
+                            <label>
+                                <input type="radio" name="direction" value="short" />
+                                Short
+                            </label>
+
+                            <small>
+                                Long berarti berharap harga naik. Short berarti
+                                berharap harga turun.
+                            </small>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <label for="entry-price">
+                                Entry Price
+                            </label>
+
+                            <input type="number" id="entry-price" name="entryPrice" placeholder="Contoh: 2500" min="0"
+                                step="any" inputmode="decimal" autocomplete="off" />
+
+                            <small>
+                                Harga saat posisi kamu dibuka.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stop-loss">
+                                Stop Loss
+                            </label>
+
+                            <input type="number" id="stop-loss" name="stopLoss" placeholder="Contoh: 2480" min="0"
+                                step="any" inputmode="decimal" autocomplete="off" />
+
+                            <small>
+                                Harga untuk membatasi Loss jika posisi bergerak
+                                berlawanan.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="take-profit">
+                                Take Profit
+                            </label>
+
+                            <input type="number" id="take-profit" name="takeProfit" placeholder="Contoh: 2540" min="0"
+                                step="any" inputmode="decimal" autocomplete="off" />
+
+                            <small>
+                                Target harga untuk mengambil Profit.
+                            </small>
+                        </div>
+                    </section>
+                </div>
+
+                <p id="form-message" role="alert" aria-live="polite"></p>
+
+                <button type="button" id="calculate-button">
+                    Calculate Risk
+                </button>
+            </form>
+        </section>
+
+        <section class="results-section" aria-labelledby="results-title">
+            <div class="section-heading">
+                <p class="eyebrow">HASIL PERHITUNGAN</p>
+
+                <h2 id="results-title">Calculation Results</h2>
+
+                <p>
+                    Isi data Trade di atas untuk melihat hasil perhitungan.
+                </p>
+            </div>
+
+            <div class="results-grid">
+                <article class="result-card">
+                    <h3>Risk Amount</h3>
+                    <p id="risk-amount-result">Belum ada hasil</p>
+                    <small>
+                        Jumlah uang yang direncanakan untuk berisiko jika
+                        Stop Loss terkena.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Risk %</h3>
+                    <p id="risk-percent-result">Belum ada hasil</p>
+                    <small>
+                        Persentase Risk dibandingkan dengan Account Balance.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Recommended Position Size</h3>
+                    <p id="position-size-result">Belum ada hasil</p>
+                    <small>
+                        Estimasi ukuran posisi berdasarkan Balance, Risk, dan
+                        jarak Stop Loss.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Stop Loss Distance</h3>
+                    <p id="stop-distance-result">Belum ada hasil</p>
+                    <small>
+                        Jarak antara Entry Price dan Stop Loss.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Take Profit Distance</h3>
+                    <p id="take-profit-distance-result">Belum ada hasil</p>
+                    <small>
+                        Jarak antara Entry Price dan Take Profit.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Maximum Loss</h3>
+                    <p id="maximum-loss-result">Belum ada hasil</p>
+                    <small>
+                        Estimasi Loss jika Stop Loss terkena.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Potential Profit</h3>
+                    <p id="potential-profit-result">Belum ada hasil</p>
+                    <small>
+                        Estimasi Profit jika Take Profit tercapai, sebelum
+                        trading costs.
+                    </small>
+                </article>
+
+                <article class="result-card">
+                    <h3>Risk/Reward</h3>
+                    <p id="risk-reward-result">Belum ada hasil</p>
+                    <small>
+                        Perbandingan antara Risk dan Potential Profit.
+                    </small>
+                </article>
+            </div>
+
+            <div class="card">
+                <h3>Jadi, harus pakai berapa?</h3>
+
+                <p>
+                    Gunakan Recommended Position Size sebagai referensi
+                    berdasarkan input yang kamu masukkan.
+                </p>
+
+                <p>
+                    Pastikan Contract Specification dan trading costs di broker
+                    kamu sesuai dengan yang digunakan calculator.
+                </p>
+            </div>
+            <div class="card">
+                <details>
+                    <summary>Apa itu Risk Amount?</summary>
+                    <p>
+                        Risk Amount adalah jumlah uang yang kamu rencanakan untuk berisiko
+                        jika Stop Loss terkena.
+                    </p>
+                </details>
+
+                <details>
+                    <summary>Apa itu Position Size?</summary>
+                    <p>
+                        Position Size adalah ukuran posisi berdasarkan Balance, Risk,
+                        Stop Loss Distance, dan Instrument Specification.
+                    </p>
+                </details>
+
+                <details>
+                    <summary>Apa itu Risk/Reward?</summary>
+                    <p>
+                        Risk/Reward membandingkan kemungkinan Loss dengan Potential Profit.
+                        Contoh 1:2 berarti target Profit dua kali dari Risk.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <section class="margin-section" aria-labelledby="margin-title">
+            <div class="section-heading">
+                <p class="eyebrow">LEVERAGE & MARGIN</p>
+
+                <h2 id="margin-title">Leverage & Margin</h2>
+
+                <p>
+                    Hitung estimasi Margin yang dibutuhkan untuk membuka posisi.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="form-group">
+                    <label for="leverage">Leverage</label>
+
+                    <select id="leverage">
+                        <option value="30">1:30</option>
+                        <option value="50">1:50</option>
+                        <option value="100" selected>1:100</option>
+                        <option value="200">1:200</option>
+                        <option value="500">1:500</option>
+                        <option value="custom">Custom</option>
+                    </select>
+
+                    <small>
+                        Leverage memengaruhi Margin yang dibutuhkan. Leverage
+                        bukan alasan untuk mengambil Risk lebih besar.
+                    </small>
+                </div>
+
+                <div class="form-group" id="custom-leverage-group" hidden>
+                    <label for="custom-leverage">
+                        Custom Leverage
+                    </label>
+
+                    <input type="number" id="custom-leverage" min="1" step="1" placeholder="Contoh: 100"
+                        inputmode="numeric" />
+                </div>
+
+                <div class="results-grid margin-results">
+                    <article class="result-card">
+                        <h3>Notional Value</h3>
+                        <p id="notional-value-result">Belum ada hasil</p>
+                        <small>
+                            Nilai total posisi sebelum memperhitungkan Leverage.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Required Margin</h3>
+                        <p id="required-margin-result">Belum ada hasil</p>
+                        <small>
+                            Dana yang diperkirakan dibutuhkan untuk membuka posisi.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Margin %</h3>
+                        <p id="margin-percent-result">Belum ada hasil</p>
+                        <small>
+                            Persentase Margin dibandingkan dengan Account Balance.
+                        </small>
+                    </article>
+                </div>
+
+                <p class="specification-note">
+                    Leverage tidak menentukan nominal Loss secara langsung.
+                    Risk terutama dipengaruhi oleh Position Size, Entry Price,
+                    Stop Loss, dan Instrument Specification.
+                </p>
+            </div>
+            <details>
+                <summary>Apa itu Margin?</summary>
+                <p>
+                    Margin adalah dana yang diperkirakan dibutuhkan untuk membuka posisi.
+                    Besarnya dipengaruhi oleh Position Size, harga, Contract Size, dan
+                    Leverage.
+                </p>
+            </details>
+
+            <details>
+                <summary>Apa itu Leverage?</summary>
+                <p>
+                    Leverage memengaruhi jumlah Margin yang dibutuhkan. Leverage tidak
+                    otomatis membuat Risk menjadi lebih besar atau lebih kecil.
+                </p>
+            </details>
+        </section>
+
+        <section class="drawdown-section" aria-labelledby="drawdown-title">
+            <div class="section-heading">
+                <p class="eyebrow">DRAWDOWN MANAGEMENT</p>
+
+                <h2 id="drawdown-title">Drawdown Calculator</h2>
+
+                <p>
+                    Lihat seberapa jauh Balance kamu turun dari nilai awal.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="specification-grid">
+                    <div class="form-group">
+                        <label for="starting-balance">
+                            Starting Balance
+                        </label>
+
+                        <input type="number" id="starting-balance" min="0" step="any" placeholder="Contoh: 10000"
+                            inputmode="decimal" />
+
+                        <small>
+                            Balance sebelum mengalami Loss.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="current-balance">
+                            Current Balance
+                        </label>
+
+                        <input type="number" id="current-balance" min="0" step="any" placeholder="Contoh: 9000"
+                            inputmode="decimal" />
+
+                        <small>
+                            Balance kamu saat ini.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maximum-drawdown">
+                            Maximum Drawdown
+                        </label>
+
+                        <input type="number" id="maximum-drawdown" min="0" step="any" placeholder="Contoh: 2000"
+                            inputmode="decimal" />
+
+                        <small>
+                            Batas penurunan Balance yang ingin kamu pantau.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="daily-loss-limit">
+                            Daily Loss Limit
+                        </label>
+
+                        <input type="number" id="daily-loss-limit" min="0" step="any" placeholder="Contoh: 500"
+                            inputmode="decimal" />
+
+                        <small>
+                            Batas Loss harian yang ingin kamu gunakan.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="button" id="calculate-drawdown">
+                    Calculate Drawdown
+                </button>
+
+                <p id="drawdown-message" class="specification-note" aria-live="polite"></p>
+
+                <div class="results-grid margin-results">
+                    <article class="result-card">
+                        <h3>Current Drawdown</h3>
+                        <p id="current-drawdown-result">Belum ada hasil</p>
+                        <small>
+                            Jumlah penurunan Balance dari Starting Balance.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Current Drawdown %</h3>
+                        <p id="current-drawdown-percent-result">
+                            Belum ada hasil
+                        </p>
+                        <small>
+                            Persentase penurunan dari Starting Balance.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Remaining Drawdown</h3>
+                        <p id="remaining-drawdown-result">Belum ada hasil</p>
+                        <small>
+                            Sisa ruang sebelum mencapai Maximum Drawdown.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Remaining Daily Loss</h3>
+                        <p id="remaining-daily-loss-result">
+                            Belum ada hasil
+                        </p>
+                        <small>
+                            Sisa ruang sebelum mencapai Daily Loss Limit.
+                        </small>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Recovery Needed %</h3>
+                        <p id="recovery-needed-result">Belum ada hasil</p>
+                        <small>
+                            Persentase Profit yang dibutuhkan untuk kembali ke
+                            Balance sebelumnya.
+                        </small>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="prop-firm-section" aria-labelledby="prop-firm-title">
+            <div class="section-heading">
+                <p class="eyebrow">PROP FIRM MODE</p>
+
+                <h2 id="prop-firm-title">Prop Firm Risk</h2>
+
+                <p>
+                    Hitung batas Risk berdasarkan aturan Prop Firm yang kamu gunakan.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="specification-grid">
+                    <div class="form-group">
+                        <label for="prop-account-size">
+                            Account Size
+                        </label>
+
+                        <input type="number" id="prop-account-size" min="0" step="any" placeholder="Contoh: 10000"
+                            inputmode="decimal" />
+
+                        <small>
+                            Nilai awal akun Prop Firm.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prop-daily-loss-percent">
+                            Daily Loss Limit %
+                        </label>
+
+                        <input type="number" id="prop-daily-loss-percent" min="0" max="100" step="any"
+                            placeholder="Contoh: 5" inputmode="decimal" />
+
+                        <small>
+                            Batas Loss maksimal dalam satu hari.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prop-maximum-loss-percent">
+                            Maximum Loss %
+                        </label>
+
+                        <input type="number" id="prop-maximum-loss-percent" min="0" max="100" step="any"
+                            placeholder="Contoh: 10" inputmode="decimal" />
+
+                        <small>
+                            Batas Loss maksimal selama mengikuti aturan akun.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prop-current-balance">
+                            Current Balance
+                        </label>
+
+                        <input type="number" id="prop-current-balance" min="0" step="any" placeholder="Contoh: 10000"
+                            inputmode="decimal" />
+
+                        <small>
+                            Balance akun Prop Firm kamu saat ini.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prop-risk-per-trade">
+                            Risk per Trade %
+                        </label>
+
+                        <input type="number" id="prop-risk-per-trade" min="0" max="100" step="any"
+                            placeholder="Contoh: 1" inputmode="decimal" />
+
+                        <small>
+                            Persentase Risk yang digunakan untuk setiap Trade.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="button" id="calculate-prop-firm">
+                    Calculate Prop Firm Risk
+                </button>
+
+                <p id="prop-firm-message" class="specification-note" aria-live="polite"></p>
+
+                <div class="results-grid margin-results">
+                    <article class="result-card">
+                        <h3>Daily Loss Limit</h3>
+                        <p id="prop-daily-loss-result">Belum ada hasil</p>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Maximum Loss</h3>
+                        <p id="prop-maximum-loss-result">Belum ada hasil</p>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Remaining Daily Loss</h3>
+                        <p id="prop-remaining-daily-result">
+                            Belum ada hasil
+                        </p>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Remaining Maximum Loss</h3>
+                        <p id="prop-remaining-maximum-result">
+                            Belum ada hasil
+                        </p>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Risk Amount per Trade</h3>
+                        <p id="prop-risk-amount-result">
+                            Belum ada hasil
+                        </p>
+                    </article>
+
+                    <article class="result-card">
+                        <h3>Full-Risk Trades Remaining</h3>
+                        <p id="prop-trades-remaining-result">
+                            Belum ada hasil
+                        </p>
+                    </article>
+                </div>
+
+                <p class="specification-note">
+                    Setiap Prop Firm memiliki aturan yang berbeda. Selalu cek
+                    aturan resmi Prop Firm yang digunakan.
+                </p>
+            </div>
+        </section>
+
+        <section class="instrument-specification-section" aria-labelledby="instrument-specification-title">
+            <div class="section-heading">
+                <p class="eyebrow">INSTRUMENT SETTINGS</p>
+
+                <h2 id="instrument-specification-title">
+                    Instrument Specification
+                </h2>
+
+                <p>
+                    Gunakan data specification dari broker kamu agar hasil lebih sesuai.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="specification-grid">
+                    <div class="form-group">
+                        <label for="contract-size">
+                            Contract Size
+                        </label>
+
+                        <input type="number" id="contract-size" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Jumlah unit dalam 1 Lot. Nilainya bisa berbeda
+                            tergantung broker.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tick-size">
+                            Tick Size
+                        </label>
+
+                        <input type="number" id="tick-size" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Perubahan harga minimum pada instrument.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tick-value">
+                            Tick Value
+                        </label>
+
+                        <input type="number" id="tick-value" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Nilai uang dari satu Tick. Cek nilainya di broker.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="point-size">
+                            Point Size
+                        </label>
+
+                        <input type="number" id="point-size" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Ukuran satu Point pada instrument.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minimum-volume">
+                            Minimum Volume
+                        </label>
+
+                        <input type="number" id="minimum-volume" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Volume paling kecil yang bisa dibuka di broker.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volume-step">
+                            Volume Step
+                        </label>
+
+                        <input type="number" id="volume-step" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Kelipatan perubahan Volume yang diperbolehkan.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maximum-volume">
+                            Maximum Volume
+                        </label>
+
+                        <input type="number" id="maximum-volume" min="0" step="any" inputmode="decimal" />
+
+                        <small>
+                            Volume paling besar yang diperbolehkan broker.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="button" id="save-specification">
+                    Apply Instrument Specification
+                </button>
+
+                <p id="specification-message" class="specification-note">
+                    Belum tahu nilainya? Cek Contract Specification di broker kamu.
+                </p>
+            </div>
+            <details>
+                <summary>Belum tahu Instrument Specification?</summary>
+                <p>
+                    Cek Contract Specification langsung di broker kamu. Nilai Contract Size,
+                    Tick Size, Tick Value, dan Volume Step dapat berbeda antar broker.
+                </p>
+            </details>
+        </section>
+
+        <section class="risk-reward-section" aria-labelledby="risk-reward-title">
+            <div class="section-heading">
+                <p class="eyebrow">QUICK CALCULATOR</p>
+
+                <h2 id="risk-reward-title">Risk/Reward Table</h2>
+
+                <p>
+                    Lihat Potential Profit berdasarkan Risk Amount yang kamu masukkan.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="form-group">
+                    <label for="quick-risk-amount">
+                        Risk Amount
+                    </label>
+
+                    <input type="number" id="quick-risk-amount" min="0" step="any" value="100" inputmode="decimal" />
+
+                    <small>
+                        Masukkan nominal Risk yang ingin dibandingkan.
+                    </small>
+                </div>
+
+                <button type="button" id="calculate-risk-reward">
+                    Calculate Risk/Reward
+                </button>
+
+                <div class="table-wrapper">
+                    <table class="risk-reward-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Risk/Reward</th>
+                                <th scope="col">Risk Amount</th>
+                                <th scope="col">Potential Profit</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="risk-reward-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section" aria-labelledby="disclaimer-title">
+            <div class="card">
+                <h2 id="disclaimer-title">Disclaimer</h2>
+
+                <p>
+                    CFD Risk Calculator adalah tool edukasi untuk membantu
+                    perhitungan risk management. Hasil perhitungan merupakan
+                    estimasi dan dapat berbeda dengan Contract Specification,
+                    trading costs, execution, spread, margin requirement, dan
+                    kondisi aktual dari broker.
+                </p>
+
+                <p>
+                    Selalu verifikasi specification instrument langsung pada
+                    broker yang digunakan.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>CFD Risk Calculator</p>
+        </div>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
