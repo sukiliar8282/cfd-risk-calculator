@@ -1573,6 +1573,13 @@ authLoginButton?.addEventListener(
     }
 );
 
+function getAuthRedirectUrl() {
+    return (
+        window.location.origin +
+        window.location.pathname
+    );
+}
+
 authRegisterButton?.addEventListener(
     "click",
     async () => {
@@ -1599,7 +1606,10 @@ authRegisterButton?.addEventListener(
             error
         } = await supabaseClient.auth.signUp({
             email: credentials.email,
-            password: credentials.password
+            password: credentials.password,
+            options: {
+                emailRedirectTo: getAuthRedirectUrl()
+            }
         });
 
         authRegisterButton.disabled = false;
