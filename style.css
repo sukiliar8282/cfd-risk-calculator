@@ -1076,15 +1076,22 @@ fieldset small,
         font-size: 0.7rem;
     }
 
-    .nav-item {
-        width: 100%;
-        min-height: 34px;
-        padding: 0.35rem 0.25rem;
-        font-size: 0.72rem;
-        line-height: 1.2;
-        text-align: center;
-        white-space: normal;
-    }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 36px;
+            padding: 0.4rem 0.25rem;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            color: #9badc5;
+            font-size: 0.72rem;
+            line-height: 1.2;
+            text-align: center;
+            text-decoration: none;
+            white-space: normal;
+        }
 
     .site-header,
     main.container,
@@ -1257,10 +1264,13 @@ body::after {
     font-weight: 600;
 }
 
-.nav-item.is-active {
-    background: rgba(69, 184, 242, 0.13);
-    border-color: rgba(69, 184, 242, 0.35);
-    color: var(--color-primary);
+.nav-item {
+    min-height: 40px;
+    padding: 0.62rem 0.75rem;
+    color: #9badc5;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 /* Konten utama lebih fokus */
