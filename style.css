@@ -1383,38 +1383,59 @@ button:hover {
         position: sticky;
         top: 0;
         z-index: 30;
+        width: 100%;
+        height: auto;
         padding: 0.75rem;
     }
 
-    .sidebar-brand {
-        margin-bottom: 0.75rem;
-    }
-
     .sidebar-nav {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.45rem;
-        overflow-x: auto;
-        padding-bottom: 0.2rem;
-        scrollbar-width: none;
-    }
-
-    .sidebar-nav::-webkit-scrollbar {
-        display: none;
+        overflow: visible;
     }
 
     .sidebar-label {
-        display: none;
+        display: block;
+        grid-column: 1 / -1;
+        margin: 0.75rem 0 0.2rem;
     }
 
     .nav-item {
-        flex: 0 0 auto;
-        width: auto;
-        min-height: 38px;
-        padding: 0.55rem 0.75rem;
-        white-space: nowrap;
-        font-size: 0.8rem;
+        width: 100%;
+        min-height: 42px;
+        padding: 0.55rem 0.45rem;
+        white-space: normal;
+        text-align: center;
+        font-size: 0.75rem;
+    }
+
+    .site-header,
+    main.container,
+    .site-footer {
+        margin-left: 0;
+    }
+
+    main.container {
+        width: 100%;
+        padding: 1.25rem 0.75rem;
+    }
+
+    .app-topbar {
+        padding-inline: 0.75rem;
+    }
+
+    .header-actions {
+        width: 100%;
+        gap: 0.45rem;
+    }
+
+    .header-actions button {
+        flex: 1;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
     }
 }
 /* Password visibility toggle */
