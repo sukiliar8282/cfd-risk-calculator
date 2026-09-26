@@ -221,9 +221,8 @@ select:focus {
 }
 
 .site-header {
-  position: relative;
-  border-bottom: 1px solid var(--color-border);
-  background:
+    position: relative;
+    background:
     radial-gradient(
       circle at top right,
       rgba(14, 165, 233, 0.14),
@@ -1258,9 +1257,9 @@ body::after {
 
 /* Header aplikasi */
 .site-header {
-  padding: 0.85rem 0;
-  background: rgba(11, 17, 32, 0.92);
-  border-bottom: 1px solid var(--color-border);
+    padding: 0.85rem 0;
+    background: var(--color-bg);
+    border-bottom: 0;
 }
 
 .app-topbar {
@@ -1290,10 +1289,10 @@ body::after {
 
 /* Sidebar lebih sederhana */
 .app-sidebar {
-  width: 240px;
-  padding: 1.15rem 0.85rem;
-  background: #0c1628;
-  border-right-color: var(--color-border);
+    width: 240px;
+    padding: 1.15rem 0.85rem;
+    background: var(--color-bg);
+    border-right: 0;
 }
 
 .sidebar-brand {
