@@ -1685,3 +1685,6 @@ button:hover {
         margin-right: auto;
     }
 }
+main>section {
+    scroll-margin-top: 1rem;
+}
