@@ -902,7 +902,18 @@ const calculateButton =
 calculateButton?.addEventListener(
     "click",
     (event) => {
+        const originalText =
+            calculateButton.textContent;
+
+        calculateButton.disabled = true;
+        calculateButton.textContent = "Menghitung...";
+
         handleCalculation(event);
+
+        window.setTimeout(() => {
+            calculateButton.disabled = false;
+            calculateButton.textContent = originalText;
+        }, 350);
     }
 );
 function calculateDrawdown(
@@ -1526,6 +1537,20 @@ async function initializeSupabaseAuth() {
     );
 }
 
+function getCaptchaToken() {
+    return (
+        document.querySelector(
+            'input[name="cf-turnstile-response"]'
+        )?.value || ""
+    );
+}
+
+function resetCaptcha() {
+    if (window.turnstile) {
+        window.turnstile.reset();
+    }
+}
+
 authLoginButton?.addEventListener(
     "click",
     async () => {
@@ -1544,27 +1569,60 @@ authLoginButton?.addEventListener(
             return;
         }
 
-        authLoginButton.disabled = true;
-        setAuthMessage("Sedang login...");
+        const captchaToken = getCaptchaToken();
 
-        const {
-            error
-        } = await supabaseClient.auth.signInWithPassword(
-            credentials
-        );
-
-        authLoginButton.disabled = false;
-
-        if (error) {
+        if (!captchaToken) {
             setAuthMessage(
-                "Login gagal. Periksa Email dan Password kamu.",
+                "Selesaikan verifikasi CAPTCHA terlebih dahulu.",
                 "error"
             );
 
             return;
         }
 
+        authLoginButton.disabled = true;
+        setAuthMessage("Sedang login...");
+
+        const {
+            error
+        } = await supabaseClient.auth.signInWithPassword({
+            email: credentials.email,
+            password: credentials.password,
+            options: {
+                captchaToken
+            }
+        });
+        resetCaptcha();
+        authLoginButton.disabled = false;
+
+        if (error) {
+            console.error("Login Supabase:", error);
+
+            setAuthMessage(
+                error.message,
+                "error"
+            );
+
+            showToast(
+                error.message,
+                "error"
+            );
+
+            authDialog?.classList.remove("is-shaking");
+
+            void authDialog?.offsetWidth;
+
+            authDialog?.classList.add("is-shaking");
+
+            return;
+        }
+
         setAuthMessage(
+            "Login berhasil.",
+            "success"
+        );
+
+        showToast(
             "Login berhasil.",
             "success"
         );
@@ -1597,6 +1655,16 @@ authRegisterButton?.addEventListener(
 
             return;
         }
+        const captchaToken = getCaptchaToken();
+
+        if (!captchaToken) {
+            setAuthMessage(
+                "Selesaikan verifikasi CAPTCHA terlebih dahulu.",
+                "error"
+            );
+
+            return;
+        }
 
         authRegisterButton.disabled = true;
         setAuthMessage("Sedang membuat akun...");
@@ -1608,10 +1676,11 @@ authRegisterButton?.addEventListener(
             email: credentials.email,
             password: credentials.password,
             options: {
-                emailRedirectTo: getAuthRedirectUrl()
+                emailRedirectTo: getAuthRedirectUrl(),
+                captchaToken
             }
         });
-
+        resetCaptcha();
         authRegisterButton.disabled = false;
 
         if (error) {
@@ -1692,3 +1761,181 @@ profileLogoutButton?.addEventListener(
         authOpenButton.hidden = false;
     }
 );
+function resetCaptcha() {
+    if (window.turnstile) {
+        window.turnstile.reset();
+    }
+
+    const captchaInput = document.querySelector(
+        'input[name="cf-turnstile-response"]'
+    );
+
+    if (captchaInput) {
+        captchaInput.value = "";
+    }
+}
+function clearAuthForm() {
+    const authForm = document.querySelector("#auth-form");
+
+    authForm?.reset();
+
+    const passwordInput = document.querySelector(
+        '#auth-form input[type="password"]'
+    );
+
+    if (passwordInput) {
+        passwordInput.value = "";
+    }
+
+    resetCaptcha();
+
+    setAuthMessage("");
+}
+
+window.addEventListener("pagehide", clearAuthForm);
+window.addEventListener("pageshow", clearAuthForm);
+
+authDialog?.addEventListener("close", clearAuthForm);
+
+// ===== PASSWORD TOGGLE SHOW/HIDE (PURE SVG) =====
+document.addEventListener("click", (e) => {
+    const toggleBtn = e.target.closest("#auth-password-toggle");
+    if (!toggleBtn) return;
+
+    const passwordField = toggleBtn.closest(".password-field");
+    const passwordInput = passwordField ? passwordField.querySelector("input") : document.querySelector("#auth-password");
+
+    if (!passwordInput) return;
+
+    const isPassword = passwordInput.type === "password";
+
+    // 1. Switch Tipe Input (password <-> text)
+    passwordInput.type = isPassword ? "text" : "password";
+
+    // 2. Switch Icon SVG (Pakai Toggle Class hidden)
+    const eyeOpen = toggleBtn.querySelector(".eye-open");
+    const eyeClosed = toggleBtn.querySelector(".eye-closed");
+
+    if (eyeOpen && eyeClosed) {
+        eyeOpen.classList.toggle("hidden", isPassword);
+        eyeClosed.classList.toggle("hidden", !isPassword);
+    }
+
+    // 3. Update Aksesibilitas & Focus
+    toggleBtn.setAttribute("aria-pressed", isPassword ? "true" : "false");
+    toggleBtn.setAttribute("aria-label", isPassword ? "Sembunyikan password" : "Tampilkan password");
+
+    passwordInput.focus();
+}); // <-- TARUH KODE BARU PATEN DI BAWAH TANDA INI
+
+// ===== ENTER KEY TO SUBMIT LOGIN =====
+authPasswordInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") {
+        return;
+    }
+
+    event.preventDefault();
+
+    authLoginButton?.click();
+});
+const toastContainer =
+    document.querySelector("#toast-container");
+
+function showToast(
+    message,
+    type = "info",
+    duration = 3000
+) {
+    if (!toastContainer || !message) {
+        return;
+    }
+
+    const toast = document.createElement("div");
+
+    toast.className = "toast";
+    toast.dataset.type = type;
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    window.setTimeout(() => {
+        toast.classList.add("is-leaving");
+
+        window.setTimeout(() => {
+            toast.remove();
+        }, 180);
+    }, duration);
+}
+
+window.showToast = showToast;
+
+function lockPageScroll() {
+    document.body.style.overflow = "hidden";
+}
+
+function unlockPageScroll() {
+    document.body.style.overflow = "";
+}
+
+authDialog?.addEventListener("show", lockPageScroll);
+authDialog?.addEventListener("close", unlockPageScroll);
+
+profileDialog?.addEventListener("show", lockPageScroll);
+profileDialog?.addEventListener("close", unlockPageScroll);
+
+const sidebarNavItems = [
+    ...document.querySelectorAll(
+        ".app-sidebar .nav-item[href^='#']"
+    )
+];
+
+const sidebarSections = [
+    ...document.querySelectorAll("main section[id]")
+];
+
+function showSidebarSection(targetId) {
+    const visibleSections =
+        targetId === "calculator-section"
+            ? ["calculator-section", "results-section"]
+            : [targetId];
+
+    sidebarSections.forEach((section) => {
+        section.hidden = !visibleSections.includes(section.id);
+    });
+
+    sidebarNavItems.forEach((item) => {
+        const itemTarget =
+            item.getAttribute("href")?.slice(1);
+
+        const isActive =
+            itemTarget === targetId;
+
+        item.classList.toggle("is-active", isActive);
+
+        if (isActive) {
+            item.setAttribute("aria-current", "page");
+        } else {
+            item.removeAttribute("aria-current");
+        }
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+sidebarNavItems.forEach((item) => {
+    item.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const targetId =
+            item.getAttribute("href")?.slice(1);
+
+        if (targetId) {
+            showSidebarSection(targetId);
+        }
+    });
+});
+
+showSidebarSection("calculator-section");
