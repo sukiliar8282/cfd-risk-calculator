@@ -1488,6 +1488,8 @@ button:hover {
 
 /* Mobile navigation */
 
+@media (max-width: 639px) {
+
 /* KHUSUS ANDROID / MOBILE */
 #mobile-menu-toggle {
     display: inline-flex;
@@ -1597,6 +1599,9 @@ button:hover {
     grid-template-columns: 1fr;
   }
 
+
+
+}
 
 /* Password visibility toggle */
 .password-field {
@@ -1815,3 +1820,5 @@ button:hover {
 main > section {
   scroll-margin-top: 1rem;
 }
+
+
