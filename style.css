@@ -1454,11 +1454,54 @@ button:hover {
         padding: 0.75rem;
     }
 
-        #mobile-menu-toggle {
-            display: block;
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
+                #mobile-menu-toggle {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.6rem;
+        
+                    width: auto;
+                    padding: 0.55rem 0.8rem;
+        
+                    border: 1px solid #e5e7eb;
+                    border-radius: 6px;
+        
+                    background: #fff;
+                    color: #1f2937;
+        
+                    font: inherit;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+        
+                    cursor: pointer;
+                    transition:
+                        background-color 0.15s ease,
+                        border-color 0.15s ease;
+                }
+        
+                #mobile-menu-toggle:hover {
+                    background: #f8fafc;
+                    border-color: #d1d5db;
+                }
+        
+                #mobile-menu-toggle:focus-visible {
+                    outline: 2px solid #2b86c5;
+                    outline-offset: 2px;
+                }
+        
+                .menu-icon {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    width: 16px;
+                }
+        
+                .menu-icon span {
+                    display: block;
+                    width: 16px;
+                    height: 2px;
+                    background: currentColor;
+                    border-radius: 1px;
+                }
     
         .sidebar-nav {
             display: none;

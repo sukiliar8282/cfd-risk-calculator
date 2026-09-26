@@ -33,7 +33,7 @@
     <meta property="og:description"
         content="Hitung Risk, Position Size, Profit, Loss, dan Exposure dengan lebih mudah." />
     <meta property="og:type" content="website" />
-
+     
     <link rel="stylesheet" href="style.css?v=3" />
 
 </head>
@@ -54,9 +54,7 @@
                     Login
                 </button>
 
-                <button type="button" id="theme-toggle" aria-label="Ganti tema">
-                    Theme
-                </button>
+                
 
                 <div id="auth-user-area" hidden>
                     <button type="button" id="auth-profile-button">
@@ -89,10 +87,6 @@
                 <input type="email" id="auth-email" placeholder="nama@email.com" autocomplete="email" />
             </div>
 
-            <div class="form-group">
-                <label for="auth-password">
-                    Password
-                </label>
 
                 <div class="field-group">
                     <!-- Cukup 1 label aja di sini, hapus label yang dobel! -->
@@ -180,7 +174,12 @@
 <aside class="app-sidebar" aria-label="Navigasi aplikasi">
 
     <button type="button" id="mobile-menu-toggle" aria-expanded="false" aria-controls="sidebar-nav">
-        Menu
+        <span class="menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <span>Menu</span>
     </button>
 
     <nav class="sidebar-nav" id="sidebar-nav">
@@ -265,7 +264,7 @@
             <p>
 
             </p>
-            </div>
+          
 
             <form id="risk-calculator-form">
                 <div class="calculator-grid">
