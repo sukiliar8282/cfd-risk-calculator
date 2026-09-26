@@ -1883,6 +1883,32 @@ authDialog?.addEventListener("close", unlockPageScroll);
 profileDialog?.addEventListener("show", lockPageScroll);
 profileDialog?.addEventListener("close", unlockPageScroll);
 
+const mobileMenuToggle =
+    document.querySelector("#mobile-menu-toggle");
+
+const sidebarNav =
+    document.querySelector("#sidebar-nav");
+
+mobileMenuToggle?.addEventListener("click", () => {
+    const isOpen =
+        sidebarNav?.classList.toggle("is-open") ?? false;
+
+    mobileMenuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+});
+
+sidebarNav?.addEventListener("click", (event) => {
+    if (event.target.closest(".nav-item")) {
+        sidebarNav.classList.remove("is-open");
+
+        mobileMenuToggle?.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+    }
+});
 const sidebarNavItems = [
     ...document.querySelectorAll(
         ".app-sidebar .nav-item[href^='#']"

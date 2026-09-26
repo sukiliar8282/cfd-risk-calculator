@@ -966,6 +966,12 @@ fieldset small,
     }
 }
 
+#mobile-menu-toggle {
+    display: none;
+}
+    
+
+
 /* App sidebar navigation */
 .app-sidebar {
     position: fixed;
@@ -1448,12 +1454,22 @@ button:hover {
         padding: 0.75rem;
     }
 
-    .sidebar-nav {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.45rem;
-        overflow: visible;
-    }
+        #mobile-menu-toggle {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    
+        .sidebar-nav {
+            display: none;
+        }
+    
+        .sidebar-nav.is-open {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem;
+            overflow: visible;
+        }
 
     .sidebar-label {
         display: block;
