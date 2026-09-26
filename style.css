@@ -1683,3 +1683,82 @@ fieldset small,
     flex: 0 0 auto;
   }
 }
+
+/* =========================================================
+   FINAL ANDROID OVERRIDE — LOGIN / PROFILE COMPACT
+   This rule intentionally uses !important because older mobile
+   rules in this stylesheet set buttons to flex: 1 / width: 100%.
+   Desktop is untouched.
+   ========================================================= */
+@media screen and (max-width: 639px) {
+  .header-actions,
+  #auth-user-area {
+    width: auto !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.55rem !important;
+  }
+
+  .header-actions > button,
+  .header-actions button,
+  #auth-user-area > button,
+  #auth-user-area button,
+  .header-content > button {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: max-content !important;
+    flex: 0 0 auto !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    padding-inline: 1rem !important;
+  }
+
+  /* Login */
+  #login-button,
+  #login-btn,
+  #login-button-open,
+  #auth-login-button,
+  #open-login-button {
+    width: 105px !important;
+    min-width: 105px !important;
+    max-width: 105px !important;
+  }
+
+  /* Profile */
+  #profile-button,
+  #profile-btn,
+  #auth-profile-button,
+  #open-profile-button {
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  #login-button,
+  #login-btn,
+  #login-button-open,
+  #auth-login-button,
+  #open-login-button {
+    width: 96px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+  }
+
+  #profile-button,
+  #profile-btn,
+  #auth-profile-button,
+  #open-profile-button {
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
+  }
+}
