@@ -601,6 +601,7 @@ input[type="radio"] {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
 .margin-results {
     margin-top: 1rem;
 }
@@ -608,6 +609,7 @@ input[type="radio"] {
 .margin-section .result-card p {
     color: var(--color-primary);
 }
+
 .drawdown-section .result-card p {
     color: var(--color-primary);
 }
@@ -619,6 +621,7 @@ input[type="radio"] {
 #drawdown-message[data-type="success"] {
     color: var(--color-success);
 }
+
 .prop-firm-section .result-card p {
     color: var(--color-primary);
 }
@@ -634,6 +637,7 @@ input[type="radio"] {
 #prop-trades-remaining-result {
     color: var(--color-success) !important;
 }
+
 /* Beginner-friendly help text */
 .form-group small,
 fieldset small,
@@ -717,6 +721,7 @@ fieldset small,
         max-width: 42ch;
     }
 }
+
 /* Header layout */
 .site-header {
     padding: 1.25rem 0;
@@ -856,6 +861,7 @@ fieldset small,
         width: 100%;
     }
 }
+
 /* Profile dialog */
 #profile-dialog {
     width: min(100% - 2rem, 380px);
@@ -959,6 +965,7 @@ fieldset small,
         padding: 1.25rem;
     }
 }
+
 /* App sidebar navigation */
 .app-sidebar {
     position: fixed;
@@ -1076,22 +1083,22 @@ fieldset small,
         font-size: 0.7rem;
     }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 36px;
-            padding: 0.4rem 0.25rem;
-            border: 1px solid transparent;
-            border-radius: var(--radius-sm);
-            color: #9badc5;
-            font-size: 0.72rem;
-            line-height: 1.2;
-            text-align: center;
-            text-decoration: none;
-            white-space: normal;
-        }
+    .nav-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 36px;
+        padding: 0.4rem 0.25rem;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        color: #9badc5;
+        font-size: 0.72rem;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+        white-space: normal;
+    }
 
     .site-header,
     main.container,
@@ -1130,6 +1137,7 @@ fieldset small,
         grid-template-columns: 1fr;
     }
 }
+
 /* Container Wrapper Input Password */
 .password-field {
     position: relative;
@@ -1173,9 +1181,11 @@ fieldset small,
 .eye-icon {
     pointer-events: none;
 }
+
 .hidden {
     display: none !important;
 }
+
 /* EINCET clean dashboard layer */
 
 :root {
@@ -1341,6 +1351,7 @@ button:hover {
         padding-top: 1.5rem;
     }
 }
+
 /* Compact help panels */
 .compact-help {
     margin-bottom: 0.75rem;
@@ -1393,6 +1404,7 @@ button:hover {
 .compact-help li:last-child {
     margin-bottom: 0;
 }
+
 /* Results hierarchy */
 .results-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1424,12 +1436,13 @@ button:hover {
         grid-template-columns: 1fr;
     }
 }
+
 /* Mobile navigation */
 @media (max-width: 639px) {
     .app-sidebar {
-        position: sticky;
-        top: 0;
-        z-index: 30;
+        position: relative;
+        top: auto;
+        z-index: 1;
         width: 100%;
         height: auto;
         padding: 0.75rem;
@@ -1485,6 +1498,7 @@ button:hover {
         grid-template-columns: 1fr;
     }
 }
+
 /* Password visibility toggle */
 .password-field {
     position: relative;
@@ -1522,6 +1536,7 @@ button:hover {
 .password-toggle-btn .hidden {
     display: none;
 }
+
 /* Toast notification */
 .toast-container {
     position: fixed;
@@ -1595,6 +1610,7 @@ button:hover {
         width: auto;
     }
 }
+
 /* Login error feedback */
 #auth-dialog.is-shaking {
     animation: auth-shake 360ms ease-in-out;
@@ -1629,6 +1645,7 @@ button:hover {
         animation: none;
     }
 }
+
 /* Brand details */
 ::selection {
     background: rgba(69, 184, 242, 0.35);
@@ -1658,6 +1675,7 @@ button:hover {
     scrollbar-color: #2c4968 #0b1120;
     scrollbar-width: thin;
 }
+
 @media (min-width: 640px) {
 
     .site-header,
@@ -1685,6 +1703,7 @@ button:hover {
         margin-right: auto;
     }
 }
+
 main>section {
     scroll-margin-top: 1rem;
 }
