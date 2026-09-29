@@ -22,9 +22,11 @@
         upgrade-insecure-requests;
     " />
 
-    <link rel="icon" type="image/png" href="assets/eincet.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/eincet.png?v=3" />
+    <link rel="shortcut icon" type="image/png" href="assets/eincet.png?v=3" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/eincet.png?v=3" />
 
-    <title>CFD Risk Calculator – Position Size & Risk Management</title>
+    <title>CFD Risk Calculator</title>
 
     <meta name="description"
         content="CFD Risk Calculator untuk menghitung Position Size, Risk, Stop Loss, Take Profit, Risk/Reward, Margin, Drawdown, dan trading risk management." />
@@ -33,7 +35,7 @@
     <meta property="og:description"
         content="Hitung Risk, Position Size, Profit, Loss, dan Exposure dengan lebih mudah." />
     <meta property="og:type" content="website" />
-     
+
     <link rel="stylesheet" href="style.css?v=3" />
 
 </head>
@@ -42,8 +44,6 @@
     <header class="site-header">
         <div class="container header-content app-topbar">
             <div class="topbar-context">
-                <p class="eyebrow">EINCET RISK DESK</p>
-
                 <p class="topbar-title">
                     Risk Management Workspace
                 </p>
@@ -54,7 +54,7 @@
                     Login
                 </button>
 
-                
+
 
                 <div id="auth-user-area" hidden>
                     <button type="button" id="auth-profile-button">
@@ -88,50 +88,49 @@
             </div>
 
 
-                <div class="field-group">
-                    <!-- Cukup 1 label aja di sini, hapus label yang dobel! -->
+            <div class="field-group">
+                <!-- Cukup 1 label aja di sini, hapus label yang dobel! -->
 
-                    <div class="password-field">
-                        <input type="password" id="auth-password" placeholder="Masukkan password"
-                            autocomplete="current-password" required />
-                        <button type="button" id="auth-password-toggle" class="password-toggle-btn"
-                            aria-label="Tampilkan password" aria-pressed="false" tabindex="-1">
-                            <svg class="eye-icon eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                            <svg class="eye-icon eye-closed hidden" xmlns="http://www.w3.org/2000/svg" width="18"
-                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                                <path
-                                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                                <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                                <line x1="2" x2="22" y1="2" y2="22" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAFCzAjBY_TCdgM7g"></div>
-
-                <div class="auth-actions">
-                    <button type="button" id="auth-login-button">
-                        Login
-                    </button>
-
-                    <button type="button" id="auth-register-button">
-                        Buat Akun
-                    </button>
-
-                    <button type="button" id="auth-guest-button">
-                        Lanjut Tanpa Login
+                <div class="password-field">
+                    <input type="password" id="auth-password" placeholder="Masukkan password"
+                        autocomplete="current-password" required />
+                    <button type="button" id="auth-password-toggle" class="password-toggle-btn"
+                        aria-label="Tampilkan password" aria-pressed="false" tabindex="-1">
+                        <svg class="eye-icon eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg class="eye-icon eye-closed hidden" xmlns="http://www.w3.org/2000/svg" width="18"
+                            height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                            <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                            <line x1="2" x2="22" y1="2" y2="22" />
+                        </svg>
                     </button>
                 </div>
+            </div>
 
-                <p id="auth-message" role="status" aria-live="polite"></p>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFCzAjBY_TCdgM7g"></div>
+
+            <div class="auth-actions">
+                <button type="button" id="auth-login-button">
+                    Login
+                </button>
+
+                <button type="button" id="auth-register-button">
+                    Buat Akun
+                </button>
+
+                <button type="button" id="auth-guest-button">
+                    Lanjut Tanpa Login
+                </button>
+            </div>
+
+            <p id="auth-message" role="status" aria-live="polite"></p>
         </form>
     </dialog>
 
@@ -150,7 +149,7 @@
             </h2>
 
             <div class="profile-avatar">
-                <img src="assets/eincet.png" alt="Profile branding EINCET" />
+                <img src="assets/eincet.png" alt="User profile avatar" />
             </div>
 
             <p class="profile-label">
@@ -171,54 +170,64 @@
         </div>
     </dialog>
 
-<aside class="app-sidebar" aria-label="Navigasi aplikasi">
+    <aside class="app-sidebar" aria-label="Navigasi aplikasi">
 
-    <button type="button" id="mobile-menu-toggle" aria-expanded="false" aria-controls="sidebar-nav">
-        <span class="menu-icon" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
-        <span>Menu</span>
-    </button>
+        <a class="sidebar-brand" href="#calculator-section" aria-label="EINCET Risk Desk">
+            <span class="sidebar-brand-mark" aria-hidden="true">
+                <img src="assets/eincet-mark.png" alt="" />
+            </span>
+            <span class="sidebar-brand-copy">
+                <strong>EINCET</strong>
+                <small>RISK DESK</small>
+            </span>
+        </a>
 
-    <nav class="sidebar-nav" id="sidebar-nav">
+        <button type="button" id="mobile-menu-toggle" aria-expanded="false" aria-controls="sidebar-nav">
+            <span class="menu-icon" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            <span>Menu</span>
+        </button>
+
+        <nav class="sidebar-nav" id="sidebar-nav">
             <p class="sidebar-label">MAIN</p>
-    
+
             <a class="nav-item is-active" href="#calculator-section">
                 Risk Calculator
             </a>
-    
+
             <a class="nav-item" href="#results-section">
                 Calculation Results
             </a>
-    
+
             <p class="sidebar-label">TOOLS</p>
-    
+
             <a class="nav-item" href="#margin-section">
                 Leverage & Margin
             </a>
-    
+
             <a class="nav-item" href="#drawdown-section">
                 Drawdown Calculator
             </a>
-    
+
             <a class="nav-item" href="#prop-firm-section">
                 Prop Firm Risk
             </a>
-    
+
             <a class="nav-item" href="#risk-reward-section">
                 Risk/Reward Table
             </a>
-    
+
             <p class="sidebar-label">SETTINGS</p>
-    
+
             <a class="nav-item" href="#instrument-specification-section">
                 Instrument Specification
             </a>
-    
+
             <p class="sidebar-label">INFO</p>
-    
+
             <a class="nav-item" href="#disclaimer-section">
                 Disclaimer
             </a>
@@ -227,16 +236,16 @@
 
     <main class="container">
 
-    <section id="calculator-section" class="calculator-section" aria-labelledby="calculator-title">
-    
-        <div class="section-heading">
+        <section id="calculator-section" class="calculator-section" aria-labelledby="calculator-title">
 
-            <h2 id="calculator-title">Risk Calculator</h2>
+            <div class="section-heading">
 
-            <p>
-                Isi data akun dan Trade Setup kamu. Setelah itu, calculator
-                akan membantu menghitung Risk dan Position Size.
-            </p>
+                <h2 id="calculator-title">Risk Calculator</h2>
+
+                <p>
+                    Isi data akun dan Trade Setup kamu. Setelah itu, calculator
+                    akan membantu menghitung Risk dan Position Size.
+                </p>
             </div>
 
             <details class="card compact-help">
@@ -264,7 +273,7 @@
             <p>
 
             </p>
-          
+
 
             <form id="risk-calculator-form">
                 <div class="calculator-grid">
@@ -557,7 +566,7 @@
             </div>
         </section>
 
-            <section id="margin-section" class="margin-section">
+        <section id="margin-section" class="margin-section">
             <div class="section-heading">
                 <p class="eyebrow">LEVERAGE & MARGIN</p>
 
@@ -899,7 +908,7 @@
             </div>
         </section>
 
-            <section id="instrument-specification-section" class="instrument-specification-section">
+        <section id="instrument-specification-section" class="instrument-specification-section">
             <div class="section-heading">
                 <p class="eyebrow">INSTRUMENT SETTINGS</p>
 
@@ -1083,7 +1092,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>CFD Risk Calculator</p>
+            <p><strong>EINCET Risk Desk</strong><span aria-hidden="true"> · </span>CFD Risk Calculator</p>
         </div>
     </footer>
 
