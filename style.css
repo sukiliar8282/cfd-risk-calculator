@@ -1144,56 +1144,44 @@ main > section {
    ========================================================= */
 @media (max-width: 639px) {
 
-  /* ---------- TOP HEADER ---------- */
+  /* =========================
+     MOBILE HEADER
+     ========================= */
 
   .site-header {
     padding: 0;
-    border-bottom: 1px solid var(--color-border);
   }
 
-  .header-content,
   .app-topbar {
-    width: 100%;
-    min-height: 52px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
+    min-height: 50px;
+    padding: 0.45rem 0.7rem;
   }
 
+  /* Workspace disembunyikan di Android */
   .topbar-context {
-    min-width: 0;
-    flex: 1;
-    align-items: flex-start;
+    display: none;
   }
 
-  .topbar-title {
-    margin: 0;
-    font-size: 0.76rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
+  /* Login + Profil tetap kanan */
   .header-actions {
-    width: auto;
-    flex: 0 0 auto;
+    width: 100%;
     justify-content: flex-end;
     gap: 0.35rem;
   }
 
   .header-actions button {
-    min-height: 34px;
-    padding: 0.35rem 0.6rem;
+    min-height: 32px;
+    padding: 0.3rem 0.6rem;
     font-size: 0.76rem;
   }
 
 
-  /* ---------- MOBILE SIDEBAR / BRAND ---------- */
+  /* =========================
+     EINCET BRAND
+     ========================= */
 
   .app-sidebar {
     position: relative;
-    z-index: 30;
 
     display: flex;
     flex-direction: row;
@@ -1212,37 +1200,46 @@ main > section {
   }
 
   .sidebar-brand {
+    display: flex;
+    align-items: center;
+
     flex: 1;
     min-width: 0;
 
     margin: 0;
     padding: 0;
 
-    border: 0;
-
     gap: 0.55rem;
   }
 
-  .sidebar-brand-mark {
-    width: 28px;
-    height: 28px;
-    flex-basis: 28px;
+  .sidebar-brand img {
+    width: 27px;
+    height: 27px;
+  }
+
+  .sidebar-brand-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1;
   }
 
   .sidebar-brand-copy strong {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
   }
 
   .sidebar-brand-copy small {
+    margin-top: 3px;
     font-size: 0.5rem;
   }
 
 
-  /* ---------- MENU BUTTON ---------- */
+  /* =========================
+     MENU
+     ========================= */
 
   #mobile-menu-toggle {
     display: inline-flex;
-    flex: 0 0 auto;
 
     align-items: center;
     justify-content: center;
@@ -1251,7 +1248,7 @@ main > section {
     min-height: 32px;
 
     margin: 0;
-    padding: 0.25rem 0.15rem;
+    padding: 0.25rem 0.1rem;
 
     border: 0;
     background: transparent;
@@ -1265,202 +1262,17 @@ main > section {
   #mobile-menu-toggle:hover,
   #mobile-menu-toggle:active {
     background: transparent;
-    color: var(--color-primary-hover);
   }
 
 
-  /* ---------- NAV ---------- */
-
-  .sidebar-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-
-    display: none;
-
-    margin: 0;
-    padding: 0.6rem 0.7rem;
-
-    border-bottom: 1px solid var(--color-border);
-
-    background: var(--color-bg);
-  }
-
-  .sidebar-nav.is-open {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .sidebar-label {
-    margin: 0.45rem 0 0.15rem;
-    font-size: 0.6rem;
-  }
-
-  .nav-item {
-    min-height: 36px;
-    padding: 0.45rem 0.6rem;
-
-    border: 0;
-    border-radius: 6px;
-
-    font-size: 0.78rem;
-    text-align: left;
-  }
-
-
-  /* ---------- MAIN ---------- */
-
-  main {
-    padding-block: 0;
-  }
+  /* =========================
+     MAIN
+     ========================= */
 
   main.container {
     width: 100%;
     margin: 0;
-
     padding: 1.15rem 0.7rem 2rem;
-  }
-
-  .calculator-section,
-  .results-section,
-  .info-section {
-    margin-bottom: 1.75rem;
-  }
-
-  .section-heading {
-    margin-bottom: 0.85rem;
-  }
-
-  .section-heading h2 {
-    margin-bottom: 0.3rem;
-    font-size: 1.35rem;
-  }
-
-  .section-heading p:last-child {
-    font-size: 0.84rem;
-    line-height: 1.45;
-  }
-
-
-  /* ---------- HELP CARDS ---------- */
-
-  .compact-help {
-    margin-bottom: 0.65rem;
-    padding: 0.8rem 0.9rem;
-  }
-
-  .compact-help summary {
-    font-size: 0.82rem;
-  }
-
-
-  /* ---------- CALCULATOR ---------- */
-
-  .calculator-grid,
-  .results-grid,
-  .specification-grid {
-    grid-template-columns: 1fr;
-    gap: 0.7rem;
-  }
-
-  .card {
-    padding: 0.9rem;
-    border-radius: 9px;
-  }
-
-  .calculator-section > .card {
-    margin-bottom: 0.7rem;
-  }
-
-  .form-group {
-    margin-bottom: 0.8rem;
-  }
-
-  .form-group label,
-  fieldset legend {
-    margin-bottom: 0.35rem;
-    font-size: 0.82rem;
-  }
-
-  input,
-  select {
-    min-height: 40px;
-    padding: 0.55rem 0.7rem;
-    font-size: 0.88rem;
-  }
-
-  .form-group small,
-  fieldset small {
-    margin-top: 0.35rem;
-    font-size: 0.72rem;
-    line-height: 1.4;
-  }
-
-  fieldset label {
-    font-size: 0.82rem;
-  }
-
-
-  /* ---------- CALCULATE BUTTON ---------- */
-
-  #calculate-button {
-    width: 100%;
-    min-height: 42px;
-    margin-top: 0.75rem;
-  }
-
-
-  /* ---------- RESULTS ---------- */
-
-  .result-card {
-    min-height: 0;
-    padding: 0.9rem;
-  }
-
-  .result-card h3 {
-    font-size: 0.8rem;
-  }
-
-  .result-card p {
-    font-size: 1.15rem;
-  }
-
-  .result-card small {
-    max-width: none;
-    font-size: 0.72rem;
-  }
-
-
-  /* ---------- DIALOG ---------- */
-
-  #auth-dialog,
-  #profile-dialog {
-    width: calc(100% - 1rem);
-  }
-
-  #auth-form,
-  .profile-panel {
-    padding: 1rem;
-  }
-
-  .auth-actions {
-    flex-direction: column;
-  }
-
-  .auth-actions button {
-    width: 100%;
-  }
-
-
-  /* ---------- TOAST ---------- */
-
-  .toast-container {
-    top: 0.65rem;
-    right: 0.65rem;
-    left: 0.65rem;
-    width: auto;
   }
 }
 /* =========================================================
