@@ -1395,3 +1395,9 @@ main > section {
     flex-shrink: 0;
     margin: 0;
 }
+/* Hide topbar logo on Android/mobile only */
+@media (max-width: 639px) {
+  .topbar-brand-icon {
+    display: none !important;
+  }
+}
