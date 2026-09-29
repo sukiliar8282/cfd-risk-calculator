@@ -26,7 +26,7 @@
   --color-primary: #4c7dff;
   --color-primary-hover: #628eff;
   --color-primary-active: #3d6fef;
-  --color-primary-soft: rgba(76, 125, 255, 0.1);
+  --color-primary-soft: rgba(76, 125, 255, 0.10);
   --color-primary-border: rgba(76, 125, 255, 0.28);
 
   --color-success: #4ade80;
@@ -1071,8 +1071,7 @@ main > section {
 }
 
 @keyframes auth-shake {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateX(0);
   }
 
@@ -1214,8 +1213,8 @@ main > section {
 
   .header-content,
   .app-topbar {
-    align-items: center;
-    flex-direction: row;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .header-content {
@@ -1223,9 +1222,9 @@ main > section {
   }
 
   .topbar-context {
-    align-items: center;
-    flex-direction: row;
-    gap: 0.8rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
   .header-actions {
@@ -1353,30 +1352,5 @@ main > section {
 
   #auth-dialog.is-shaking {
     animation: none;
-  }
-}
-
-/* =========================================================
-   20. TOPBAR LOGO FIX
-   Desktop: logo tetap tampil
-   Android/mobile: logo disembunyikan saja
-   ========================================================= */
-.topbar-title {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: 0.88rem;
-}
-
-.topbar-brand-icon {
-  display: block;
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  flex: 0 0 auto;
-}
-
-@media (max-width: 639px) {
-  .topbar-brand-icon {
-    display: none !important;
   }
 }
