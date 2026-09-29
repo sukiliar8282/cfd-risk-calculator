@@ -1142,30 +1142,46 @@ main > section {
 /* =========================================================
    MOBILE / ANDROID — COMPACT APP LAYOUT
    ========================================================= */
+/* =========================================================
+   MOBILE / ANDROID
+   ========================================================= */
 @media (max-width: 639px) {
 
   /* =========================
-     MOBILE HEADER
+     TOP HEADER
      ========================= */
 
   .site-header {
+    margin-left: 0;
     padding: 0;
   }
 
+  .header-content,
   .app-topbar {
+    width: 100%;
     min-height: 50px;
-    padding: 0.45rem 0.7rem;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 0.5rem;
   }
 
-  /* Workspace disembunyikan di Android */
+  /* Hide Risk Management Workspace on mobile */
   .topbar-context {
     display: none;
   }
 
-  /* Login + Profil tetap kanan */
+  /* Login + Profile di kanan */
   .header-actions {
-    width: 100%;
+    width: auto;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
     justify-content: flex-end;
+
     gap: 0.35rem;
   }
 
@@ -1177,7 +1193,7 @@ main > section {
 
 
   /* =========================
-     EINCET BRAND
+     EINCET BRAND BAR
      ========================= */
 
   .app-sidebar {
@@ -1197,6 +1213,8 @@ main > section {
     border-bottom: 1px solid var(--color-border);
 
     background: var(--color-bg);
+
+    overflow: visible;
   }
 
   .sidebar-brand {
@@ -1209,70 +1227,169 @@ main > section {
     margin: 0;
     padding: 0;
 
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
 
-  .sidebar-brand img {
-    width: 27px;
-    height: 27px;
+  .sidebar-brand-mark {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+
+    margin: 0;
   }
 
   .sidebar-brand-copy {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     line-height: 1;
   }
 
   .sidebar-brand-copy strong {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
+    line-height: 1;
   }
 
   .sidebar-brand-copy small {
     margin-top: 3px;
-    font-size: 0.5rem;
+    font-size: 0.48rem;
+    line-height: 1;
   }
 
 
   /* =========================
-     MENU
+     MENU BUTTON
      ========================= */
 
   #mobile-menu-toggle {
     display: inline-flex;
 
+    flex: 0 0 auto;
+
     align-items: center;
     justify-content: center;
 
     width: auto;
-    min-height: 32px;
+    min-height: 30px;
 
     margin: 0;
-    padding: 0.25rem 0.1rem;
+    padding: 0.2rem 0;
 
     border: 0;
     background: transparent;
 
     color: var(--color-primary);
 
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 500;
   }
 
   #mobile-menu-toggle:hover,
   #mobile-menu-toggle:active {
     background: transparent;
+    color: var(--color-primary-hover);
   }
 
 
   /* =========================
-     MAIN
+     MOBILE NAV
      ========================= */
+
+  .sidebar-nav {
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    display: none;
+
+    margin: 0;
+    padding: 0.65rem 0.7rem;
+
+    border-bottom: 1px solid var(--color-border);
+
+    background: var(--color-bg);
+  }
+
+  .sidebar-nav.is-open {
+    display: flex;
+
+    flex-direction: column;
+    gap: 0.2rem;
+
+    margin-top: 0;
+  }
+
+  .sidebar-label {
+    margin: 0.45rem 0 0.1rem;
+    font-size: 0.58rem;
+  }
+
+  .nav-item {
+    min-height: 36px;
+
+    padding: 0.45rem 0.6rem;
+
+    border: 0;
+    border-radius: 6px;
+
+    font-size: 0.76rem;
+    text-align: left;
+  }
+
+
+  /* =========================
+     MAIN CONTENT
+     ========================= */
+
+  main {
+    padding-block: 0;
+  }
 
   main.container {
     width: 100%;
-    margin: 0;
+    margin-left: 0;
+
     padding: 1.15rem 0.7rem 2rem;
+  }
+
+
+  /* =========================
+     CALCULATOR
+     ========================= */
+
+  .calculator-grid,
+  .results-grid,
+  .specification-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .card {
+    padding: 0.9rem;
+  }
+
+  .result-card {
+    min-height: 0;
+  }
+
+  #calculate-button {
+    width: 100%;
+  }
+
+
+  /* =========================
+     DIALOG
+     ========================= */
+
+  #auth-dialog {
+    width: min(calc(100% - 1rem), 460px);
+  }
+
+  #auth-form {
+    padding: 1.2rem;
   }
 }
 /* =========================================================
@@ -1384,23 +1501,6 @@ main > section {
 .site-footer strong {
   color: var(--color-text);
   font-weight: 700;
-}
-
-@media (max-width: 639px) {
-  .sidebar-brand {
-    margin-bottom: 0.55rem;
-    padding-bottom: 0.7rem;
-  }
-
-  .sidebar-brand-mark {
-    width: 30px;
-    height: 30px;
-    flex-basis: 30px;
-  }
-
-  .topbar-brand-name {
-    font-size: 0.75rem;
-  }
 }
 /* =========================================================
    CLEAN BRAND MARK OVERRIDE
