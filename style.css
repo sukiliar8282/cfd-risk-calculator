@@ -1224,7 +1224,7 @@ main > section {
 
   .header-content,
   .app-topbar {
-    align-items: stretch;
+    align-items: flex-start;
     flex-direction: column;
   }
 
@@ -1232,32 +1232,19 @@ main > section {
     gap: 0.85rem;
   }
 
-  /* Keep the brand, workspace title, and logo on one compact row.
-     The rest of the mobile layout is unchanged. */
   .topbar-context {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.15rem;
     width: 100%;
-    align-items: center;
-    flex-direction: row;
-    gap: 0.65rem;
-    flex-wrap: nowrap;
-  }
-
-  .topbar-context .eyebrow {
-    flex: 0 0 auto;
-    white-space: nowrap;
   }
 
   .topbar-title {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    min-width: 0;
+    max-width: 100%;
     white-space: nowrap;
-  }
-
-  .topbar-title span {
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .topbar-brand-icon {
@@ -1392,4 +1379,19 @@ main > section {
   #auth-dialog.is-shaking {
     animation: none;
   }
+}
+.topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.topbar-brand-icon {
+    display: block;
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin: 0;
 }
