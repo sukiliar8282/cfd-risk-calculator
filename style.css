@@ -26,7 +26,7 @@
   --color-primary: #4c7dff;
   --color-primary-hover: #628eff;
   --color-primary-active: #3d6fef;
-  --color-primary-soft: rgba(76, 125, 255, 0.10);
+  --color-primary-soft: rgba(76, 125, 255, 0.1);
   --color-primary-border: rgba(76, 125, 255, 0.28);
 
   --color-success: #4ade80;
@@ -263,20 +263,9 @@ h3 {
 }
 
 .topbar-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.88rem;
-}
-
-.topbar-brand-icon {
-  display: block;
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  flex: 0 0 auto;
 }
 
 .header-actions {
@@ -1082,7 +1071,8 @@ main > section {
 }
 
 @keyframes auth-shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
 
@@ -1224,8 +1214,8 @@ main > section {
 
   .header-content,
   .app-topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
   }
 
   .header-content {
@@ -1233,24 +1223,9 @@ main > section {
   }
 
   .topbar-context {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.15rem;
-    width: 100%;
-  }
-
-  .topbar-title {
-    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    max-width: 100%;
-    white-space: nowrap;
-  }
-
-  .topbar-brand-icon {
-    width: 30px;
-    height: 30px;
-    flex: 0 0 30px;
+    flex-direction: row;
+    gap: 0.8rem;
   }
 
   .header-actions {
@@ -1380,22 +1355,26 @@ main > section {
     animation: none;
   }
 }
+
+/* =========================================================
+   20. TOPBAR LOGO FIX
+   Desktop: logo tetap tampil
+   Android/mobile: logo disembunyikan saja
+   ========================================================= */
 .topbar-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
 }
 
 .topbar-brand-icon {
-    display: block;
-    width: 42px !important;
-    height: 42px !important;
-    object-fit: contain;
-    flex-shrink: 0;
-    margin: 0;
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
-/* Hide topbar logo on Android/mobile only */
+
 @media (max-width: 639px) {
   .topbar-brand-icon {
     display: none !important;
