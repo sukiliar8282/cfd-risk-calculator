@@ -1,12 +1,15 @@
+
 /* =========================================================
-   TRADING PLAYBOOK — CLEAN PROFESSIONAL SIGNATURE BLUE
-   Full replacement stylesheet
-   Design: dark neutral / signature deep electric blue
+   TRADING PLAYBOOK
+   CLEAN PROFESSIONAL SIGNATURE BLUE
+   Full responsive refactor
    ========================================================= */
+
 
 /* =========================================================
    1. DESIGN TOKENS
    ========================================================= */
+
 :root {
   color-scheme: dark;
 
@@ -22,7 +25,6 @@
   --color-text-muted: #9ba3af;
   --color-text-subtle: #707987;
 
-  /* SIGNATURE BLUE */
   --color-primary: #4c7dff;
   --color-primary-hover: #628eff;
   --color-primary-active: #3d6fef;
@@ -55,11 +57,15 @@
   --transition-smooth: 220ms ease;
 }
 
+
 /* =========================================================
    2. RESET / BASE
    ========================================================= */
+
 * {
   box-sizing: border-box;
+  scrollbar-color: #3a414c var(--color-bg);
+  scrollbar-width: thin;
 }
 
 html {
@@ -173,9 +179,11 @@ select:focus {
   margin-inline: auto;
 }
 
+
 /* =========================================================
    3. TYPOGRAPHY
    ========================================================= */
+
 h1,
 h2,
 h3,
@@ -225,9 +233,11 @@ h3 {
   font-size: 0.98rem;
 }
 
+
 /* =========================================================
    4. HEADER / TOPBAR
    ========================================================= */
+
 .site-header {
   position: relative;
   padding: 0.85rem 0;
@@ -235,18 +245,19 @@ h3 {
   background: var(--color-bg);
 }
 
-.header-content {
+.header-content,
+.app-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.header-content {
   gap: var(--space-5);
   min-height: 52px;
 }
 
 .app-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: var(--space-4);
   min-height: 52px;
 }
@@ -254,7 +265,7 @@ h3 {
 .topbar-context {
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
+  gap: 0;
 }
 
 .topbar-context .eyebrow {
@@ -266,6 +277,20 @@ h3 {
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.88rem;
+}
+
+/*
+   Existing topbar branding remains disabled.
+   EINCET identity is handled by .sidebar-brand.
+*/
+.topbar-brandline {
+  display: none;
+}
+
+.topbar-brand-name,
+.topbar-brand-divider,
+.topbar-brand-product {
+  display: none;
 }
 
 .header-actions {
@@ -283,14 +308,14 @@ h3 {
 }
 
 .header-content button {
-  background: transparent;
   border-color: var(--color-border);
+  background: transparent;
   color: var(--color-text);
 }
 
 .header-content button:hover {
-  background: var(--color-primary-soft);
   border-color: var(--color-primary-border);
+  background: var(--color-primary-soft);
   color: var(--color-primary-hover);
 }
 
@@ -300,9 +325,11 @@ h3 {
   gap: 0.5rem;
 }
 
+
 /* =========================================================
-   5. SIDEBAR / NAVIGATION
+   5. SIDEBAR / BRAND / NAVIGATION
    ========================================================= */
+
 .app-sidebar {
   position: fixed;
   z-index: 20;
@@ -321,20 +348,59 @@ h3 {
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.5rem;
-  padding: 0 0.45rem;
+  gap: 0.7rem;
+  margin: 0 0 1.35rem;
+  padding: 0.2rem 0.45rem 1.15rem;
+  border-bottom: 1px solid var(--color-border);
   color: var(--color-text);
+  text-decoration: none;
   font-weight: 800;
   letter-spacing: 0.07em;
 }
 
-.sidebar-brand img {
-  width: 32px;
-  height: 32px;
+.sidebar-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sidebar-brand-mark img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
-  border-radius: 50%;
-  background: #000;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sidebar-brand-copy {
+  display: grid;
+  gap: 0.02rem;
+  line-height: 1;
+}
+
+.sidebar-brand-copy strong {
+  color: var(--color-text);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.095em;
+}
+
+.sidebar-brand-copy small {
+  color: var(--color-primary);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.sidebar-brand:hover .sidebar-brand-copy strong {
+  color: var(--color-primary-hover);
 }
 
 .sidebar-nav {
@@ -382,15 +448,21 @@ h3 {
   color: var(--color-primary-hover);
 }
 
+
 /* =========================================================
-   6. LAYOUT / SECTIONS
+   6. MAIN LAYOUT
    ========================================================= */
+
 main {
   padding-block: 2.25rem;
 }
 
 main.container {
   padding-top: 2.25rem;
+}
+
+main > section {
+  scroll-margin-top: 1rem;
 }
 
 .calculator-section,
@@ -420,9 +492,11 @@ main.container {
   gap: 1rem;
 }
 
+
 /* =========================================================
    7. CARDS / SURFACES
    ========================================================= */
+
 .card,
 .result-card {
   border: 1px solid var(--color-border);
@@ -493,19 +567,11 @@ main.container {
   margin-bottom: 0;
 }
 
-/* No arbitrary nth-child color hierarchy. */
-.results-section .result-card:nth-child(1),
-.results-section .result-card:nth-child(3),
-.results-section .result-card:nth-child(6),
-.results-section .result-card:nth-child(7),
-.results-section .result-card:nth-child(8) {
-  border-color: var(--color-border);
-  background: var(--color-surface);
-}
 
 /* =========================================================
    8. FORMS
    ========================================================= */
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -560,7 +626,9 @@ fieldset small,
   margin-top: 1rem;
 }
 
+
 /* Password field */
+
 .password-field {
   position: relative;
   display: flex;
@@ -610,13 +678,16 @@ fieldset small,
   pointer-events: none;
 }
 
+
 /* =========================================================
-   9. TABLES / RESULTS
+   9. TABLES / RESULTS / HELP
    ========================================================= */
+
 .table-wrapper {
   width: 100%;
   margin-top: 1.5rem;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
 }
 
 .risk-reward-table {
@@ -689,7 +760,7 @@ fieldset small,
 }
 
 #prop-trades-remaining-result {
-  color: var(--color-success) !important;
+  color: var(--color-success);
 }
 
 .card ol {
@@ -706,7 +777,9 @@ fieldset small,
   margin-bottom: 0;
 }
 
-/* Compact help panels */
+
+/* Compact help */
+
 .compact-help {
   margin-bottom: 0.75rem;
   padding: 0.95rem 1.1rem;
@@ -759,11 +832,14 @@ fieldset small,
   margin-bottom: 0;
 }
 
+
 /* =========================================================
    10. AUTH / LOGIN DIALOG
    ========================================================= */
+
 #auth-dialog {
   width: min(calc(100% - 2rem), 460px);
+  max-width: 460px;
   margin: auto;
   padding: 0;
   border: 1px solid var(--color-border);
@@ -848,11 +924,14 @@ fieldset small,
   animation: auth-shake 320ms ease-in-out;
 }
 
+
 /* =========================================================
    11. PROFILE DIALOG
    ========================================================= */
+
 #profile-dialog {
   width: min(calc(100% - 2rem), 380px);
+  max-width: 380px;
   margin: auto;
   padding: 0;
   border: 1px solid var(--color-border);
@@ -921,9 +1000,11 @@ fieldset small,
   background: rgba(251, 113, 133, 0.08);
 }
 
+
 /* =========================================================
    12. MOBILE MENU
    ========================================================= */
+
 #mobile-menu-toggle {
   display: none;
 }
@@ -942,13 +1023,15 @@ fieldset small,
   display: block;
   width: 15px;
   height: 1.5px;
-  border-radius: 1px;
+  border-radius: 2px;
   background: currentColor;
 }
+
 
 /* =========================================================
    13. TOASTS
    ========================================================= */
+
 .toast-container {
   position: fixed;
   z-index: 100;
@@ -989,9 +1072,11 @@ fieldset small,
   animation: toast-out 160ms ease both;
 }
 
+
 /* =========================================================
    14. FOOTER
    ========================================================= */
+
 .site-footer {
   border-top: 1px solid var(--color-border);
   padding-block: 1.5rem;
@@ -1003,9 +1088,16 @@ fieldset small,
   margin-bottom: 0;
 }
 
+.site-footer strong {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+
 /* =========================================================
-   15. SMALL STATES / UTILITIES
+   15. UTILITIES / SCROLLBAR
    ========================================================= */
+
 .hidden {
   display: none !important;
 }
@@ -1034,18 +1126,11 @@ fieldset small,
   background: #505966;
 }
 
-* {
-  scrollbar-color: #3a414c var(--color-bg);
-  scrollbar-width: thin;
-}
-
-main > section {
-  scroll-margin-top: 1rem;
-}
 
 /* =========================================================
-   16. ANIMATION
+   16. ANIMATIONS
    ========================================================= */
+
 @keyframes toast-in {
   from {
     opacity: 0;
@@ -1071,7 +1156,8 @@ main > section {
 }
 
 @keyframes auth-shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
 
@@ -1088,9 +1174,11 @@ main > section {
   }
 }
 
+
 /* =========================================================
-   17. TABLET / DESKTOP
+   17. DESKTOP
    ========================================================= */
+
 @media (min-width: 640px) {
   .site-header,
   main.container,
@@ -1111,14 +1199,8 @@ main > section {
     align-items: center;
   }
 
-  .calculator-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .results-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
+  .calculator-grid,
+  .results-grid,
   .specification-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1139,93 +1221,66 @@ main > section {
   }
 }
 
+
 /* =========================================================
-   MOBILE / ANDROID — COMPACT APP LAYOUT
+   18. MOBILE / ANDROID
+   Dedicated small-screen layout
    ========================================================= */
-/* =========================================================
-   MOBILE / ANDROID
-   ========================================================= */
+
 @media (max-width: 639px) {
 
-  /* =========================
-     TOP HEADER
-     ========================= */
+  /* -------------------------------------------------------
+     MOBILE HEADER STRUCTURE
 
-  .site-header {
-    margin-left: 0;
-    padding: 0;
-  }
+     Visual arrangement:
 
-  .header-content,
-  .app-topbar {
-    width: 100%;
-    min-height: 50px;
+     EINCET DESK
 
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
+     Menu                         Login  Profile
 
-    gap: 0.5rem;
-  }
-
-  /* Hide Risk Management Workspace on mobile */
-  .topbar-context {
-    display: none;
-  }
-
-  /* Login + Profile di kanan */
-  .header-actions {
-    width: auto;
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 0.35rem;
-  }
-
-  .header-actions button {
-    min-height: 32px;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.76rem;
-  }
-
-
-  /* =========================
-     EINCET BRAND BAR
-     ========================= */
+     The sidebar owns the brand + menu.
+     The site header owns the account actions.
+     Both occupy the same compact header area.
+     ------------------------------------------------------- */
 
   .app-sidebar {
     position: relative;
+    z-index: 40;
+    top: auto;
+    left: auto;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: block;
 
     width: 100%;
-    height: auto;
-    min-height: 48px;
+    height: 78px;
+    min-height: 78px;
 
-    padding: 0.45rem 0.7rem;
+    margin: 0;
+    padding: 0;
+
+    overflow: visible;
 
     border: 0;
     border-bottom: 1px solid var(--color-border);
 
     background: var(--color-bg);
-
-    overflow: visible;
   }
 
   .sidebar-brand {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.75rem;
+
     display: flex;
     align-items: center;
 
-    flex: 1;
-    min-width: 0;
+    width: auto;
+    max-width: calc(100% - 1.5rem);
 
     margin: 0;
     padding: 0;
+
+    border: 0;
 
     gap: 0.5rem;
   }
@@ -1234,14 +1289,14 @@ main > section {
     width: 28px;
     height: 28px;
     flex: 0 0 28px;
-
-    margin: 0;
   }
 
   .sidebar-brand-copy {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    gap: 0;
 
     line-height: 1;
   }
@@ -1258,46 +1313,151 @@ main > section {
   }
 
 
-  /* =========================
-     MENU BUTTON
-     ========================= */
+  /* -------------------------------------------------------
+     MOBILE MENU BUTTON
+     ------------------------------------------------------- */
 
   #mobile-menu-toggle {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.80rem;
+    
     display: inline-flex;
-
-    flex: 0 0 auto;
-
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 8px;
 
     width: auto;
-    min-height: 30px;
+    min-width: 0;
+    min-height: 28px;
 
     margin: 0;
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
 
     border: 0;
-    background: transparent;
+    border-radius: 0;
 
+    background: transparent;
     color: var(--color-primary);
 
     font-size: 0.76rem;
-    font-weight: 500;
+    font-weight: 600;
+
+    box-shadow: none;
   }
 
   #mobile-menu-toggle:hover,
   #mobile-menu-toggle:active {
+    border-color: transparent;
     background: transparent;
     color: var(--color-primary-hover);
   }
 
+  .menu-icon {
+    width: 15px;
+    height: 15px;
+  }
 
-  /* =========================
-     MOBILE NAV
-     ========================= */
+  .menu-icon span {
+    width: 15px;
+    height: 1.5px;
+    border-radius: 2px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE ACCOUNT ACTIONS
+
+     These sit at the lower-right of the same header area.
+     ------------------------------------------------------- */
+
+  .site-header {
+    position: absolute;
+    z-index: 45;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 78px;
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    pointer-events: none;
+  }
+
+  .header-content,
+  .app-topbar {
+    width: 100%;
+    height: 78px;
+    min-height: 78px;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .header-content {
+    flex-direction: row;
+  }
+
+  .topbar-context {
+    display: none;
+  }
+
+  .header-actions {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.55rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: auto;
+    margin: 0;
+    padding: 0;
+
+    gap: 0.35rem;
+
+    pointer-events: auto;
+  }
+
+  .header-actions button {
+    min-height: 30px;
+
+    margin: 0;
+    padding: 0.25rem 0.58rem;
+
+    border-radius: 6px;
+
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  #auth-user-area {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE NAVIGATION
+
+     Compact dropdown directly below the 78px header.
+     No overlay, no modal, no decorative grid.
+     ------------------------------------------------------- */
 
   .sidebar-nav {
     position: absolute;
+    z-index: 50;
 
     top: 100%;
     left: 0;
@@ -1305,9 +1465,15 @@ main > section {
 
     display: none;
 
-    margin: 0;
-    padding: 0.65rem 0.7rem;
+    width: 100%;
+    max-height: calc(100vh - 78px);
 
+    margin: 0;
+    padding: 0.55rem 0.7rem;
+
+    overflow-y: auto;
+
+    border: 0;
     border-bottom: 1px solid var(--color-border);
 
     background: var(--color-bg);
@@ -1315,34 +1481,55 @@ main > section {
 
   .sidebar-nav.is-open {
     display: flex;
-
     flex-direction: column;
-    gap: 0.2rem;
-
-    margin-top: 0;
+    gap: 0.15rem;
   }
 
   .sidebar-label {
-    margin: 0.45rem 0 0.1rem;
+    margin: 0.4rem 0 0.15rem;
+    padding: 0;
+
     font-size: 0.58rem;
+    line-height: 1.2;
   }
 
   .nav-item {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
     min-height: 36px;
 
     padding: 0.45rem 0.6rem;
 
-    border: 0;
+    border: 1px solid transparent;
     border-radius: 6px;
 
-    font-size: 0.76rem;
-    text-align: left;
+    background: transparent;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .nav-item:hover {
+    border-color: var(--color-primary-border);
+    background: var(--color-primary-soft);
+    color: var(--color-text);
+  }
+
+  .nav-item.is-active {
+    border-color: var(--color-primary-border);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
   }
 
 
-  /* =========================
-     MAIN CONTENT
-     ========================= */
+  /* -------------------------------------------------------
+     MOBILE MAIN CONTENT
+     ------------------------------------------------------- */
 
   main {
     padding-block: 0;
@@ -1350,15 +1537,29 @@ main > section {
 
   main.container {
     width: 100%;
-    margin-left: 0;
+    max-width: none;
 
-    padding: 1.15rem 0.7rem 2rem;
+    margin: 0;
+    padding:
+      1.15rem
+      0.7rem
+      2rem;
   }
 
+  .calculator-section,
+  .results-section,
+  .info-section {
+    margin-bottom: 1.7rem;
+  }
 
-  /* =========================
-     CALCULATOR
-     ========================= */
+  .section-heading {
+    margin-bottom: 0.8rem;
+  }
+
+  .section-heading p:last-child {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
 
   .calculator-grid,
   .results-grid,
@@ -1367,34 +1568,275 @@ main > section {
     gap: 0.7rem;
   }
 
+
+  /* -------------------------------------------------------
+     MOBILE TYPOGRAPHY
+     ------------------------------------------------------- */
+
+  h1 {
+    margin-bottom: 0.4rem;
+    font-size: clamp(1.8rem, 8vw, 2.35rem);
+    line-height: 1.08;
+  }
+
+  h2 {
+    margin-bottom: 0.4rem;
+    font-size: clamp(1.35rem, 6vw, 1.7rem);
+    line-height: 1.15;
+  }
+
+  h3 {
+    margin-bottom: 0.65rem;
+    font-size: 1rem;
+  }
+
+  .eyebrow {
+    font-size: 0.63rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE CARDS
+     ------------------------------------------------------- */
+
+  .card,
+  .result-card {
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+  }
+
   .card {
     padding: 0.9rem;
   }
 
   .result-card {
     min-height: 0;
+    padding: 0.85rem;
+  }
+
+  .card:hover,
+  .result-card:hover {
+    border-color: var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .result-card h3 {
+    margin-bottom: 0.45rem;
+    font-size: 0.84rem;
+  }
+
+  .result-card p {
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+
+  .result-card small {
+    margin-top: 0.55rem;
+  }
+
+  .info-section .card {
+    border-color: var(--color-primary-border);
+  }
+
+  .calculator-section > .card {
+    margin-bottom: 0.7rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE FORMS
+     ------------------------------------------------------- */
+
+  .form-group {
+    margin-bottom: 0.85rem;
+  }
+
+  .form-group label,
+  fieldset legend {
+    margin-bottom: 0.4rem;
+    font-size: 0.86rem;
+  }
+
+  fieldset {
+    margin-bottom: 0.85rem;
+  }
+
+  fieldset label {
+    min-height: 36px;
+    margin-right: 0.8rem;
+    font-size: 0.88rem;
+  }
+
+  input,
+  select {
+    min-height: 42px;
+    padding: 0.65rem 0.75rem;
   }
 
   #calculate-button {
     width: 100%;
+    min-height: 42px;
+    margin-top: 0.85rem;
+  }
+
+  .password-field input {
+    padding-right: 3.1rem;
+  }
+
+  .password-toggle-btn {
+    width: 38px;
+    min-height: 36px;
+    right: 0.35rem;
   }
 
 
-  /* =========================
-     DIALOG
-     ========================= */
+  /* -------------------------------------------------------
+     MOBILE TABLES
+     ------------------------------------------------------- */
 
-  #auth-dialog {
+  .table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1rem;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .risk-reward-table {
+    width: max-content;
+    min-width: 420px;
+  }
+
+  .risk-reward-table th,
+  .risk-reward-table td {
+    padding: 0.7rem 0.65rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE HELP / LISTS
+     ------------------------------------------------------- */
+
+  .compact-help {
+    margin-bottom: 0.6rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .compact-help summary {
+    font-size: 0.88rem;
+  }
+
+  .compact-help ol,
+  .compact-help p {
+    margin-top: 0.75rem;
+  }
+
+  .card ol {
+    padding-left: 1.15rem;
+  }
+
+  .card ol li {
+    margin-bottom: 0.45rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE DIALOGS
+     ------------------------------------------------------- */
+
+  #auth-dialog,
+  #profile-dialog {
     width: min(calc(100% - 1rem), 460px);
+    max-width: calc(100% - 1rem);
+
+    max-height: calc(100vh - 1rem);
+
+    margin: auto;
+
+    overflow-y: auto;
   }
 
-  #auth-form {
-    padding: 1.2rem;
+  #auth-form,
+  .profile-panel {
+    padding: 1.15rem;
+  }
+
+  #auth-form h2 {
+    padding-right: 2.5rem;
+  }
+
+  #auth-close-button,
+  #profile-close-button {
+    top: 0.65rem;
+    right: 0.65rem;
+
+    width: 38px;
+    min-height: 38px;
+  }
+
+  .profile-avatar {
+    width: 74px;
+    height: 74px;
+    margin: 1rem auto;
+  }
+
+  .profile-status {
+    margin-bottom: 1rem;
+  }
+
+  .auth-actions {
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+
+  .auth-actions button {
+    min-height: 42px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE TOAST
+     ------------------------------------------------------- */
+
+  .toast-container {
+    top: 0.7rem;
+    right: 0.7rem;
+    left: 0.7rem;
+
+    width: auto;
+    max-width: none;
+  }
+
+  .toast {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.84rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE FOOTER
+     ------------------------------------------------------- */
+
+  .site-footer {
+    margin-left: 0;
+    padding-block: 1.15rem;
+    font-size: 0.82rem;
   }
 }
+
+
 /* =========================================================
    19. ACCESSIBILITY / REDUCED MOTION
    ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1412,127 +1854,3 @@ main > section {
     animation: none;
   }
 }
-
-/* =========================================================
-   EINCET BRAND LAYER
-   Keep the identity quiet, deliberate, and product-first.
-   ========================================================= */
-
-.sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin: 0 0 1.35rem;
-  padding: 0.2rem 0.45rem 1.15rem;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.sidebar-brand-mark {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  overflow: hidden;
-}
-
-.sidebar-brand-mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.sidebar-brand-copy {
-  display: grid;
-  gap: 0.02rem;
-  line-height: 1;
-}
-
-.sidebar-brand-copy strong {
-  color: var(--color-text);
-  font-size: 0.82rem;
-  font-weight: 850;
-  letter-spacing: 0.095em;
-}
-
-.sidebar-brand-copy small {
-  color: var(--color-primary);
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-}
-
-.sidebar-brand:hover .sidebar-brand-copy strong {
-  color: var(--color-primary-hover);
-}
-
-.topbar-context {
-  gap: 0.28rem;
-}
-
-.topbar-brandline {
-  display: flex;
-  align-items: baseline;
-  gap: 0.42rem;
-  line-height: 1;
-}
-
-.topbar-brand-name {
-  color: var(--color-text);
-  font-size: 0.78rem;
-  font-weight: 850;
-  letter-spacing: 0.12em;
-}
-
-.topbar-brand-divider {
-  color: var(--color-border-strong);
-  font-size: 0.72rem;
-}
-
-.topbar-brand-product {
-  color: var(--color-primary);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-}
-
-.site-footer strong {
-  color: var(--color-text);
-  font-weight: 700;
-}
-/* =========================================================
-   CLEAN BRAND MARK OVERRIDE
-   The sidebar logo is a normal brand mark, not a profile avatar.
-   ========================================================= */
-.sidebar-brand-mark {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  display: grid;
-  place-items: center;
-  overflow: visible;
-  border-radius: 0;
-  background: transparent;
-}
-
-.sidebar-brand-mark img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  object-fit: contain;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-/* The topbar no longer carries a duplicate EINCET / RISK DESK wordmark. */
-.topbar-brandline {
-  display: none !important;
-}
-
-.topbar-context {
-  gap: 0;
-}
-
