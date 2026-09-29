@@ -26,7 +26,7 @@
   --color-primary: #4c7dff;
   --color-primary-hover: #628eff;
   --color-primary-active: #3d6fef;
-  --color-primary-soft: rgba(76, 125, 255, 0.1);
+  --color-primary-soft: rgba(76, 125, 255, 0.10);
   --color-primary-border: rgba(76, 125, 255, 0.28);
 
   --color-success: #4ade80;
@@ -263,9 +263,20 @@ h3 {
 }
 
 .topbar-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.88rem;
+}
+
+.topbar-brand-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .header-actions {
@@ -1071,8 +1082,7 @@ main > section {
 }
 
 @keyframes auth-shake {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateX(0);
   }
 
@@ -1214,18 +1224,46 @@ main > section {
 
   .header-content,
   .app-topbar {
-    align-items: center;
-    flex-direction: row;
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .header-content {
     gap: 0.85rem;
   }
 
+  /* Keep the brand, workspace title, and logo on one compact row.
+     The rest of the mobile layout is unchanged. */
   .topbar-context {
+    width: 100%;
     align-items: center;
     flex-direction: row;
-    gap: 0.8rem;
+    gap: 0.65rem;
+    flex-wrap: nowrap;
+  }
+
+  .topbar-context .eyebrow {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .topbar-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .topbar-title span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topbar-brand-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
   }
 
   .header-actions {
@@ -1354,18 +1392,4 @@ main > section {
   #auth-dialog.is-shaking {
     animation: none;
   }
-}
-.topbar-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
-}
-
-.topbar-brand-icon {
-    display: block;
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-    flex-shrink: 0;
 }
