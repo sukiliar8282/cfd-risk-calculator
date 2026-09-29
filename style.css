@@ -26,7 +26,7 @@
   --color-primary: #4c7dff;
   --color-primary-hover: #628eff;
   --color-primary-active: #3d6fef;
-  --color-primary-soft: rgba(76, 125, 255, 0.10);
+  --color-primary-soft: rgba(76, 125, 255, 0.1);
   --color-primary-border: rgba(76, 125, 255, 0.28);
 
   --color-success: #4ade80;
@@ -1071,7 +1071,8 @@ main > section {
 }
 
 @keyframes auth-shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
 
@@ -1213,8 +1214,8 @@ main > section {
 
   .header-content,
   .app-topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
   }
 
   .header-content {
@@ -1222,9 +1223,9 @@ main > section {
   }
 
   .topbar-context {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.15rem;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.8rem;
   }
 
   .header-actions {
@@ -1363,9 +1364,8 @@ main > section {
 
 .topbar-brand-icon {
     display: block;
-    width: 42px !important;
-    height: 42px !important;
+    width: 42px;
+    height: 42px;
     object-fit: contain;
     flex-shrink: 0;
-    margin: 0;
 }
