@@ -1354,3 +1354,18 @@ main > section {
     animation: none;
   }
 }
+.topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.topbar-brand-icon {
+    display: block;
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin: 0;
+}
